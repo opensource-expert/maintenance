@@ -26,7 +26,8 @@ services:
         Le service est actuellement en maintenance.
         <br\/>Veuillez réessayer dans quelques minutes.
         <br\/>
-        Si ce message persiste <a href=\"mailto:{{mail}}\">Écrivez nous<\/a>.
+        Si ce message persiste <a href=\"mailto:{{mail}}\">{{contact}}<\/a>.
+      CONTACT_LINK: "Écrivez nous"
     ports:
       - 50380:8080
     volumes:
