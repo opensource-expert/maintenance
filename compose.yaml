@@ -1,0 +1,35 @@
+---
+services:
+  maintenance:
+    container_name: maintenance-page
+    # our local image
+    # use: docker compose build
+    build:
+      context: ./src
+      dockerfile: Dockerfile
+    pull_policy: if_not_present
+    restart: unless-stopped
+
+    environment:
+      TEAM_NAME: "Sylvain Viart"
+      TITLE: "Outil en maintenance !"
+      MAIL_ADDRESS: "sylvain@opensource-expert.com"
+      LINK_COLOR: "#dc8100"
+      THEME: "Light"
+      PORT: 8080
+      RESPONSE_CODE: "503 Service Unavailable"
+      HEADLINE: "Maintenance"
+      # bash escape must escape both " and /
+      MESSAGE: >
+        Bonjour,
+        <br\/>
+        Le service est actuellement en maintenance.
+        <br\/>Veuillez réessayer dans quelques minutes.
+        <br\/>
+        Si ce message persiste <a href=\"mailto:{{mail}}\">Écrivez moi<\/a>
+    ports:
+      - 50380:8080
+    volumes:
+      # mount local host timezone
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
