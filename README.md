@@ -38,11 +38,14 @@ services:
       # mount local host timezone
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
+      # our local env to be loaded at runtime if exists
+      - ./.env:/etc/maintenance.env:ro
 ```
 
 start with:
 
 ```bash
+docker compose build
 docker compose up -d
 ```
 
