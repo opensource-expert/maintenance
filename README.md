@@ -1,5 +1,53 @@
 # Maintenance
 
+local docker `compose.yaml` version
+
+```yaml
+---
+services:
+  maintenance:
+    container_name: maintenance-page
+    # our local image
+    # use: docker compose build
+    build:
+      context: ./src
+      dockerfile: Dockerfile
+    pull_policy: if_not_present
+    restart: unless-stopped
+
+    environment:
+      TEAM_NAME: "Votre équipe support"
+      TITLE: "Outil en maintenance !"
+      MAIL_ADDRESS: "support@super-support.fr"
+      LINK_COLOR: "#dc8100"
+      THEME: "Light"
+      PORT: 8080
+      RESPONSE_CODE: "503 Service Unavailable"
+      HEADLINE: "Maintenance"
+      # bash escape must escape both " and /
+      MESSAGE: >
+        Bonjour,
+        <br\/>
+        Le service est actuellement en maintenance.
+        <br\/>Veuillez réessayer dans quelques minutes.
+        <br\/>
+        Si ce message persiste <a href=\"mailto:{{mail}}\">Écrivez nous<\/a>.
+    ports:
+      - 50380:8080
+    volumes:
+      # mount local host timezone
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+```
+
+start with:
+
+```bash
+docker compose up -d
+```
+
+## Original README.md
+
 A simple maintenance page in a simple docker image.
 
 ![MicroBadger Downloads](https://img.shields.io/docker/pulls/wickerlabs/maintenance?style=for-the-badge)
@@ -44,10 +92,11 @@ This will serve the *default* static maintenance page on port 80 of the host mac
 `docker run -e TEAM_NAME='Team name' -e TITLE='Oops!' -e MAIL_ADDRESS=mail@domain.com -e PORT=9000 --rm -p 80:9000 wickerlabs/maintenance`
 
 ## Docker Compose
+
+Original `docker-compose.yml` rewritten as `compose.yaml` without dockerhub image dependancy
+
 For docker compose, you can choose to refer to the *docker-compose.yml* file in the [repo](https://www.github.com/wickerlabs/maintenance) or you can have look at the example below.
 ```
-version: '3.5'
-
 services:
   maintenance:
     image: wickerlabs/maintenance

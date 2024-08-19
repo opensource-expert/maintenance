@@ -11,9 +11,9 @@ services:
     restart: unless-stopped
 
     environment:
-      TEAM_NAME: "Sylvain Viart"
+      TEAM_NAME: "Votre équipe support"
       TITLE: "Outil en maintenance !"
-      MAIL_ADDRESS: "sylvain@opensource-expert.com"
+      MAIL_ADDRESS: "support@super-support.fr"
       LINK_COLOR: "#dc8100"
       THEME: "Light"
       PORT: 8080
@@ -26,7 +26,7 @@ services:
         Le service est actuellement en maintenance.
         <br\/>Veuillez réessayer dans quelques minutes.
         <br\/>
-        Si ce message persiste <a href=\"mailto:{{mail}}\">Écrivez moi<\/a>
+        Si ce message persiste <a href=\"mailto:{{mail}}\">Écrivez nous<\/a>.
     ports:
       - 50380:8080
     volumes:
